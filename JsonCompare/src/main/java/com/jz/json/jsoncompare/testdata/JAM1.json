@@ -1,0 +1,21 @@
+{
+  "logisticsPlan": [
+    {
+      "steps": [
+        {
+          "stepExtension": {
+            "shippingOption": [
+              {
+                "deliveryEstimate": {
+                  "estimateTreatment": [
+                    "EBAY_FAST_AND_FREE"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

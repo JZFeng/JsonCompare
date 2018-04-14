@@ -23,10 +23,13 @@ public class JsonCompare {
     public static void main(String[] args) throws IOException, WrongFilterException {
 
         JsonParser parser = new JsonParser();
-        String json = convertFormattedJson2Raw(new File("./JZMaven/src/main/java/com/jz/json/testdata/O.json"));
+        File f = new File(".");
+        System.out.println(f.getAbsolutePath());
+
+        String json = convertFormattedJson2Raw(new File("src/main/java/com/jz/json/jsoncompare/testdata/O.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("./JZMaven/src/main/java/com/jz/json/testdata/D.json"));
+        json = convertFormattedJson2Raw(new File("src/main/java/com/jz/json/jsoncompare/testdata/D.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
 

@@ -1,0 +1,627 @@
+{
+  "listing": {
+    "listingId": "220012340202",
+    "marketplaceListedOn": "EBAY_US",
+    "version": 58118554012,
+    "title": {
+      "content": "Apple iPhone 5S 16GB \"Factory Unlocked\" 4G LTE iOS Smartphone"
+    },
+    "description": {
+      "content": "Daily Deals Production Listing Mirror to Staging :361122672377"
+    },
+    "images": [
+      {
+        "imageURL": "https://i.qa.ebayimg.com/00/s/NTAwWDUwMA==/z/ZGQAAOSw97haQoz4/$_0.JPG?set_id=8800005007",
+        "hostingPlatform": "ZOOM",
+        "imageURLElements": {
+          "ZOOM_GUID": "ZGQAAOSw97haQoz4"
+        },
+        "origin": "SELLER",
+        "uploadMethod": "SELLER_UPLOADED",
+        "originalSize": {
+          "height": 500,
+          "width": 500
+        }
+      }
+    ],
+    "format": "FIXED_PRICE",
+    "tradingSummary": {
+      "visitCount": 41,
+      "publishedAnswerCount": 0,
+      "unansweredQuestionCount": 0,
+      "lastVisitDate": "2018-01-30T15:51:45Z",
+      "purchaseOptions": [
+        "BUY_IT_NOW"
+      ],
+      "watchCount": 0
+    },
+    "listingLifecycle": {
+      "scheduledStartDate": {
+        "value": "2017-12-26TABC",
+        "formattedValue": "2017-12-26 10:55 AM GMT-07:00"
+      },
+      "scheduledEndDate": {
+        "value": "2018-01-25T17:55:28Z",
+        "formattedValue": "2018-01-25 10:55 AM GMT-07:00"
+      },
+      "actualEndDate": {
+        "value": "2018-01-25T17:55:28Z",
+        "formattedValue": "2018-01-25 10:55 AM GMT-07:00"
+      },
+      "listingDuration": "DAYS_30",
+      "listingEndDetail": {
+        "endReason": "ENDED_WITH_BUY_IT_NOW"
+      },
+      "listingStatus": "ENDED"
+    },
+    "inventoryLocations": [
+      {
+        "address": {
+          "city": "San Jose",
+          "stateOrProvince": "California",
+          "postalCode": "95125",
+          "country": "US"
+        }
+      }
+    ],
+    "exposureEnhancementDetail": {
+      "enhancements": [
+        {
+          "name": {
+            "content": "PHOTO_DISPLAY_TYPE"
+          },
+          "values": {
+            "content": "PICTURE_PACK"
+          }
+        },
+        {
+          "name": {
+            "content": "THEME_ID"
+          },
+          "values": {
+            "content": "10"
+          }
+        }
+      ]
+    },
+    "multipleVariationsListed": false,
+    "visitCounterType": "NO_HIT_COUNTER",
+    "userToListingRelationshipSummary": {
+      "userToListingRelationship": "NONE"
+    },
+    "itemVariations": [
+      {
+        "itemVariationId": "220012340202_0",
+        "bestOfferSettings": {
+          "bestOfferEnabled": false
+        },
+        "priceSettings": {
+          "price": {
+            "value": 137.95,
+            "currency": "USD"
+          },
+          "buyItNowPrice": {
+            "value": 137.95,
+            "currency": "USD"
+          },
+          "discountPrice": [
+            
+          ]
+        },
+        "purchasingQuantityTerms": {
+          "lotSize": 0,
+          "minRemnantSet": 0
+        },
+        "quantityAndAvailabilityByLogisticsPlans": [
+          {
+            "quantityAndAvailability": {
+              "availabilityStatus": "IN_STOCK",
+              "availableQuantity": 9,
+              "soldQuantity": 1
+            },
+            "applicableLogisticsPlans": [
+              "SHIP_TO_HOME"
+            ]
+          }
+        ],
+        "itemVariationTradingSummary": {
+          
+        },
+        "userToItemVariationRelationshipSummary": {
+          
+        }
+      }
+    ],
+    "listingClassification": {
+      "inAdultCateogry": false,
+      "productIdentifiedByeBay": false,
+      "generalCondition": {
+        "condition": {
+          "conditionId": "1000",
+          "name": {
+            "content": "New"
+          },
+          "description": {
+            "content": "A brand-new, unused, unopened, undamaged item in its original packaging (where packaging is applicable). Packaging should be the same as what is found in a retail store, unless the item is handmade or was packaged by the manufacturer in non-retail packaging, such as an unprinted box or plastic bag. See the seller's listing for full details."
+          },
+          "conditionHelpId": "1"
+        }
+      },
+      "sellerSpecifiedAspect": [
+        {
+          "rank": 1,
+          "sameValueForAllItemVariations": true,
+          "chosenBySellerToShowImages": false,
+          "name": {
+            "content": "Style"
+          },
+          "aspectValues": [
+            {
+              "type": "RankedSellerAspectValue",
+              "rank": 1,
+              "value": {
+                "content": "Some Style"
+              }
+            }
+          ]
+        }
+      ],
+      "leafCategories": [
+        {
+          "rank": 1,
+          "categoryPathFromRoot": {
+            "consolidatedCategoryProperties": [
+              {
+                "propertyName": "IS_WARRANTY_ENABLED",
+                "propertyValues": [
+                  {
+                    "booleanValue": true
+                  }
+                ]
+              },
+              {
+                "propertyName": "FACEBOOK_LIKE_BUTTON_ENABLED_ON_VI",
+                "propertyValues": [
+                  {
+                    "booleanValue": true
+                  }
+                ]
+              },
+              {
+                "propertyName": "IS_SPPM2_RTM_ENABLED",
+                "propertyValues": [
+                  {
+                    "booleanValue": true
+                  }
+                ]
+              },
+              {
+                "propertyName": "IS_RETURN_POLICY_ENABLED",
+                "propertyValues": [
+                  {
+                    "booleanValue": true
+                  }
+                ]
+              }
+            ],
+            "categoryIdentifier": [
+              {
+                "categoryId": 15032,
+                "name": {
+                  "content": "Cell Phones & Accessories"
+                },
+                "level": 0
+              },
+              {
+                "categoryId": 9355,
+                "name": {
+                  "content": "Cell Phones & Smartphones"
+                },
+                "level": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "termsAndPolicies": {
+      "hideBuyerIdentity": false,
+      "eligibleForGuestCheckout": false,
+      "logisticsTerms": {
+        "logisticsPlan": [
+          {
+            "planType": "SHIP_TO_HOME",
+            "steps": [
+              {
+                "sequence": 1,
+                "stepType": "SHIPPING",
+                "executorType": "Seller",
+                "intermediated": false,
+                "stepExtension": {
+                  "type": "ShippingStepExtension",
+                  "freeShippingAvailable": true,
+                  "internationalShippingAvailable": false,
+                  "shippingOption": [
+                    {
+                      "shippingMethod": {
+                        "shippingMethodCode": {
+                          "value": "USPSExpressMail",
+                          "displayName": {
+                            "content": "USPS Priority Mail Express"
+                          },
+                          "displayNameSuperscript": {
+                            "content": "®"
+                          }
+                        },
+                        "shippingMethodCategory": {
+                          "value": "EXPEDITED",
+                          "displayName": {
+                            "content": "Expedited Shipping",
+                            "translatedFromContent": "Expedited shipping"
+                          }
+                        },
+                        "carrier": {
+                          "value": "USPS"
+                        },
+                        "domesticOrInternational": "DOMESTIC"
+                      },
+                      "rank": 0,
+                      "rankScope": "ALL_PLANS",
+                      "promotionalShipping": false,
+                      "deliveryEstimate": {
+                        "timeEstimate": {
+                          "minDays": 2,
+                          "maxDays": 3,
+                          "minDate": "2018-02-01T10:00:00Z",
+                          "maxDate": "2018-02-02T10:00:00Z"
+                        }
+                      },
+                      "insurance": {
+                        "insuranceOption": "INSURANCE_OFF"
+                      },
+                      "totalCostToBuyer": {
+                        "value": 0.0,
+                        "currency": "USD"
+                      },
+                      "shippingCostPlan": {
+                        "costPlanType": "FLAT",
+                        "shippingCost": {
+                          "value": 0.0,
+                          "currency": "USD"
+                        },
+                        "freeShipping": true,
+                        "additionalUnitShippingCost": {
+                          "value": 0.0,
+                          "currency": "USD"
+                        }
+                      },
+                      "selected": true
+                    }
+                  ],
+                  "originLocation": {
+                    "location": {
+                      "locationId": "San Jose, California, United States",
+                      "address": {
+                        
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "planDirection": "FORWARD",
+            "minTotalCostToBuyer": {
+              "value": 0.0,
+              "currency": "USD"
+            },
+            "maxTotalCostToBuyer": {
+              "value": 0.0,
+              "currency": "USD"
+            },
+            "minDeliveryEstimate": {
+              "timeEstimate": {
+                "minDays": 2,
+                "maxDays": 3,
+                "minDate": "2018-02-01T10:00:00Z",
+                "maxDate": "2018-02-02T10:00:00Z"
+              }
+            },
+            "handlingPolicy": {
+              "handlingTime": {
+                "value": 1,
+                "unit": "BUSINESS_DAY"
+              },
+              "sameDayHandling": false,
+              "businessDaysOnly": true
+            }
+          }
+        ],
+        "supportedLogisticsRegions": {
+          "regionIncluded": [
+            {
+              "regionName": "Worldwide",
+              "regionId": "WORLDWIDE",
+              "regionType": "WORLDWIDE"
+            }
+          ]
+        },
+        "shippingInsuranceDisabled": true,
+        "listingSiteCountry": 1,
+        "listingCountry": 1,
+        "listedWithSupportShipping": false,
+        "s2HLogisticsPlanOnly": true
+      },
+      "buyerProtectionPolicy": {
+        "buyerProtectionProgram": "EBAY_BUYER_PROTECTION",
+        "buyerProtectionStatus": "ELIGIBLE",
+        "buyerProtectionProperties": {
+          
+        }
+      },
+      "paymentTerms": {
+        "paymentMethods": [
+          {
+            "rank": 1,
+            "paymentMethodDetail": {
+              "paymentMethod": "PAYPAL",
+              "paymentMethodNameText": {
+                "content": "PayPal"
+              }
+            }
+          },
+          {
+            "rank": 2,
+            "paymentMethodDetail": {
+              "paymentMethod": "VISA_MASTER",
+              "paymentMethodNameText": {
+                "content": "Visa / MasterCard"
+              }
+            }
+          }
+        ],
+        "safePaymentsSupported": true,
+        "payPalAccepted": true
+      },
+      "returnTerms": {
+        "returnsAccepted": true,
+        "refundMethod": [
+          "MONEY_BACK",
+          "REPLACEMENT"
+        ],
+        "returnShipmentPayee": "BUYER",
+        "returnPeriod": {
+          "value": 14,
+          "unit": "CALENDAR_DAY"
+        },
+        "restockingFeePercent": 20,
+        "returnsSpecifiedBySeller": true,
+        "properties": [
+          {
+            "propertyName": "RETURN_SHIPMENT_PAYEE",
+            "propertyValues": [
+              {
+                "stringValue": "Buyer"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "seller": {
+      "userIdentifier": {
+        "username": "ddmirror"
+      },
+      "businessUser": false,
+      "feedbackScore": 1043,
+      "positiveFeedbackPercentage": 99.7,
+      "privateFeedbackProfile": false,
+      "designation": "0",
+      "registrationDate": {
+        "value": "2008-07-21T21:29:17Z",
+        "formattedValue": "2008-07-21 02:29 PM GMT-07:00"
+      },
+      "registrationMarketPlaceId": "EBAY_US",
+      "registrationLocale": "en_US_MAIN",
+      "feedbackBasedSegment": 5,
+      "volumeBasedSegment": 11,
+      "powerSeller": true,
+      "specialityPrivateSeller": false,
+      "privateSaleAuthorized": false,
+      "customerSupportContactAvailable": true,
+      "hasStore": true,
+      "vehicleDealer": false,
+      "ebayStore": {
+        "storeCategories": [
+          {
+            "categoryIdentifier": {
+              "categoryId": 1
+            }
+          }
+        ],
+        "name": "ddmirror",
+        "level": "ANCHOR",
+        "displayName": {
+          "content": "ddmirror"
+        }
+      },
+      "sellerProperties": [
+        {
+          "propertyName": "PASSION_PLATFORM_OPT_IN",
+          "propertyValues": [
+            {
+              "booleanValue": true
+            }
+          ]
+        }
+      ],
+      "customerSupportContacts": [
+        
+      ],
+      "emailSupport": true,
+      "avatarImage": {
+        "imageURL": "https://ir.ebaystatic.com/pictures/aw/social/avatar.png",
+        "hostingPlatform": "EXTERNALLY_HOSTED",
+        "origin": "SELLER"
+      },
+      "hasImage": false
+    },
+    "listingLocale": "en_US_MAIN",
+    "listingProperties": [
+      {
+        "propertyName": "AVAILABLE_FOR_PICKUP_DROPOFF",
+        "propertyValues": [
+          {
+            "booleanValue": false
+          }
+        ]
+      },
+      {
+        "propertyName": "DEEP_SKU",
+        "propertyValues": [
+          {
+            "booleanValue": false
+          }
+        ]
+      },
+      {
+        "propertyName": "GET_DATE_LOADED",
+        "propertyValues": [
+          {
+            "dateValue": "2018-01-30T15:51:45Z"
+          }
+        ]
+      },
+      {
+        "propertyName": "GET_PHOTO_DISPLAY_TYPE",
+        "propertyValues": [
+          {
+            "stringValue": "PICTURE_PACK"
+          }
+        ]
+      },
+      {
+        "propertyName": "HAS_ORDER_DISCOUNT",
+        "propertyValues": [
+          {
+            "booleanValue": true
+          }
+        ]
+      },
+      {
+        "propertyName": "IS_REVIEW_ENABLED",
+        "propertyValues": [
+          {
+            "booleanValue": true
+          }
+        ]
+      },
+      {
+        "propertyName": "IS_SECURED_DESCRIPTION",
+        "propertyValues": [
+          {
+            "booleanValue": false
+          }
+        ]
+      },
+      {
+        "propertyName": "IS_SME_ACCEPTED",
+        "propertyValues": [
+          {
+            "booleanValue": true
+          }
+        ]
+      },
+      {
+        "propertyName": "ITEMKEY_NAME_SHIPPING_OPTION",
+        "propertyValues": [
+          {
+            "stringValue": "2"
+          }
+        ]
+      },
+      {
+        "propertyName": "ITEM_CONDITION_DEFINITION",
+        "propertyValues": [
+          {
+            "stringValue": "A brand-new, unused, unopened, undamaged item in its original packaging (where packaging is applicable). Packaging should be the same as what is found in a retail store, unless the item is handmade or was packaged by the manufacturer in non-retail packaging, such as an unprinted box or plastic bag. See the seller's listing for full details."
+          }
+        ]
+      },
+      {
+        "propertyName": "ITEM_CONDITION_LABEL_LOCALIZED",
+        "propertyValues": [
+          {
+            "stringValue": "Condition"
+          }
+        ]
+      },
+      {
+        "propertyName": "ITEM_VISIBILITY",
+        "propertyValues": [
+          {
+            "stringValue": "0=3,2=3,100=3,210=3"
+          }
+        ]
+      },
+      {
+        "propertyName": "SELLER_TAG_ASPECT",
+        "propertyValues": [
+          {
+            "stringValue": "Style,Some Style"
+          }
+        ]
+      },
+      {
+        "propertyName": "IS_EXPIRED",
+        "propertyValues": [
+          {
+            "booleanValue": false
+          }
+        ]
+      },
+      {
+        "propertyName": "TOTAL_SOLD_QUANTITY",
+        "propertyValues": [
+          {
+            "intValue": 1
+          }
+        ]
+      },
+      {
+        "propertyName": "SELLER_PREFERENCE_OF_AVAILABILITY_MESSAGE",
+        "propertyValues": [
+          {
+            "stringValue": "MORE_THAN_THRESHOLD"
+          }
+        ]
+      },
+      {
+        "propertyName": "THRESHOLD_FOR_MORETHAN_QUANTITY",
+        "propertyValues": [
+          {
+            "intValue": 10
+          }
+        ]
+      },
+      {
+        "propertyName": "GUEST_BUYING",
+        "propertyValues": [
+          {
+            "booleanValue": false
+          }
+        ]
+      },
+      {
+        "propertyName": "GUEST_BUYING_NEW",
+        "propertyValues": [
+          {
+            "booleanValue": false
+          }
+        ]
+      }
+    ]
+  },
+  "buyingContext": {
+    
+  }
+}
