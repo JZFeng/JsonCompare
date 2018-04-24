@@ -18,6 +18,10 @@ import java.util.HashSet;
 
 import static com.jz.json.jsoncompare.Utils.*;
 
+/**
+ * @author jzfeng
+ */
+
 public class JsonCompare {
 
     public static void main(String[] args) throws IOException, WrongFilterException {

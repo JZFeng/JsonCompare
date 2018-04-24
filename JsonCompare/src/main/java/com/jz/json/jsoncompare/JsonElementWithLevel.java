@@ -2,6 +2,10 @@ package com.jz.json.jsoncompare;
 
 import com.google.gson.*;
 
+/**
+ * @author jzfeng
+ */
+
 public class JsonElementWithLevel {
     private JsonElement jsonElement;
     private String level;

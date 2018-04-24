@@ -2,6 +2,9 @@ package com.jz.json.jsoncompare;
 
 import com.google.gson.JsonElement;
 
+/**
+ * @author jzfeng
+ */
 public class Failure {
     private String field; //absolute JsonPath
     private FailureType failureType; //enum

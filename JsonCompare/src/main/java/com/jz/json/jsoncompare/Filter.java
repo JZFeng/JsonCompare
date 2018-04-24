@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author jzfeng
+ */
 public class Filter {
     List<FailureType> types = new ArrayList<FailureType>();
     List<String> fields = new ArrayList<String>();

@@ -2,6 +2,10 @@ package com.jz.json.jsoncompare;
 
 import java.util.*;
 
+/**
+ * @author jzfeng
+ */
+
 public class CompareResult {
     private CompareMode mode;
     private List<Failure> failures = new ArrayList<Failure>();
