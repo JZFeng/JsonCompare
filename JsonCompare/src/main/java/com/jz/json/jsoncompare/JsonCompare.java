@@ -27,8 +27,6 @@ public class JsonCompare {
     public static void main(String[] args) throws IOException, WrongFilterException {
 
         JsonParser parser = new JsonParser();
-        File f = new File(".");
-        System.out.println(f.getAbsolutePath());
 
         String json = convertFormattedJson2Raw(new File("src/main/java/com/jz/json/jsoncompare/testdata/O.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
@@ -44,6 +42,7 @@ public class JsonCompare {
         CompareResult result = compareJson(o1, o2, "LENIENT");
         result = result.applyFilter(filter);
         System.out.println(result.getResultDetails());
+
     }
 
     public static CompareResult compareJson(JsonObject o1, JsonObject o2) {
