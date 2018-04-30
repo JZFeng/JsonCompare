@@ -327,30 +327,9 @@ public class JsonCompare {
             result.add(failure);
         }
 
-//        result = dedupleJsonArrayCompareResult(result);
 
         return result;
     }
 
-    /*
-    Not sure whether we need this kind of filter.
-     */
-    private static List<Failure> dedupleJsonArrayCompareResult(List<Failure> result) {
-        Set<String> set = new HashSet<>();
-  /*      Iterator<Failure> itr = result.iterator();
-        while(itr.hasNext()) {
-            Failure failure = itr.next();
-            String field = failure.getField();
-            for(String s : set) {
-                if(s.contains(field)) {
-                    itr.remove();
-                    break;
-                }
-            }
-            set.add(field);
-        }*/
-
-        return result;
-    }
 
 }

@@ -27,9 +27,6 @@ public class CompareResult {
         this.failures.addAll(failures);
     }
 
-    public static void main(String[] args) {
-    }
-
 
     public void setMode(CompareMode mode) {
         this.mode = mode;
