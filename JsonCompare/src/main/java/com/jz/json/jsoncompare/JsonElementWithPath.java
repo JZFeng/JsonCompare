@@ -6,11 +6,11 @@ import com.google.gson.*;
  * @author jzfeng
  */
 
-public class JsonElementWithLevel {
+public class JsonElementWithPath {
     private JsonElement jsonElement;
     private String level;
 
-    public JsonElementWithLevel(JsonElement jsonElement, String level) {
+    public JsonElementWithPath(JsonElement jsonElement, String level) {
         this.jsonElement = jsonElement;
         this.level = level;
     }

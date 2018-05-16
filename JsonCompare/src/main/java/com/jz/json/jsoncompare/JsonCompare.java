@@ -74,18 +74,18 @@ public class JsonCompare {
             return;
         }
 
-        Queue<JsonElementWithLevel> q1 = new LinkedList<JsonElementWithLevel>();
-        Queue<JsonElementWithLevel> q2 = new LinkedList<JsonElementWithLevel>();
-        q1.offer(new JsonElementWithLevel(o1, "$"));
-        q2.offer(new JsonElementWithLevel(o2, "$"));
+        Queue<JsonElementWithPath> q1 = new LinkedList<JsonElementWithPath>();
+        Queue<JsonElementWithPath> q2 = new LinkedList<JsonElementWithPath>();
+        q1.offer(new JsonElementWithPath(o1, "$"));
+        q2.offer(new JsonElementWithPath(o2, "$"));
         Failure failure = new Failure();
         String failureMsg = null;
         //iterate all nodes;
         while (!q1.isEmpty()) {
             int size = q1.size();
             for (int i = 0; i < size; i++) {
-                JsonElementWithLevel org = q1.poll();
-                JsonElementWithLevel dest = q2.poll();
+                JsonElementWithPath org = q1.poll();
+                JsonElementWithPath dest = q2.poll();
                 String currentLevelOfOrg = org.getLevel();
                 String currentLevelOfDest = dest.getLevel();
                 JsonElement je1 = org.getJsonElement();
@@ -127,8 +127,8 @@ public class JsonCompare {
                             result.addFailure(failure);
                         } else {
                             //only store JsonElements that have same "key";
-                            q1.offer(new JsonElementWithLevel(value, level));
-                            q2.offer(new JsonElementWithLevel(jo2.get(key), level));
+                            q1.offer(new JsonElementWithPath(value, level));
+                            q2.offer(new JsonElementWithPath(jo2.get(key), level));
                         }
                     }
 
