@@ -1,6 +1,8 @@
-package com.jz.json.jsoncompare;
+package com.jz.json.utils;
 
 import com.google.gson.*;
+import com.jz.json.jsoncompare.Result;
+import com.jz.json.jsoncompare.Failure;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +15,51 @@ import java.util.*;
  */
 
 public class Utils {
+
+    //get keys from a JsonObject
+    public static Set<String> getKeys(JsonObject o) {
+        Set<String> keys = new TreeSet<String>();
+        for (Map.Entry<String, JsonElement> entry : o.entrySet()) {
+            keys.add(entry.getKey().trim());
+        }
+
+        return keys;
+    }
+
+
+    // build hashmap, KEY is UniqueKey's Value, VALUE is JsonObject;
+    public static Map<JsonPrimitive, JsonObject> arrayOfJsonObjectToMap(JsonArray array, String uniqueKey) {
+        Map<JsonPrimitive, JsonObject> valueMap = new HashMap<JsonPrimitive, JsonObject>();
+        if (uniqueKey != null) {
+            for (int i = 0; i < array.size(); ++i) {
+                JsonObject jsonObject = (JsonObject) array.get(i);
+                JsonPrimitive id = jsonObject.get(uniqueKey).getAsJsonPrimitive();
+                valueMap.put(id, jsonObject);
+            }
+        }
+
+        return valueMap;
+    }
+
+    public static Result applyFilters(Result result, Set<String> filters) {
+
+        if (filters == null || filters.size() == 0) {
+            return result;
+        }
+
+        List<Failure> failures = result.getFailures();
+        Iterator<Failure> itr = failures.iterator();
+        while (itr.hasNext()) {
+            Failure f = itr.next();
+            String field = f.getJsonPath();
+            if (filters.contains(field)) {
+                itr.remove();
+            }
+        }
+
+        return new Result(failures);
+    }
+
 
     public static List<JsonElement> jsonArrayToList(JsonArray expected) {
         List<JsonElement> jsonElements = new ArrayList<JsonElement>(expected.size());
@@ -95,34 +142,11 @@ public class Utils {
         return true;
     }
 
-    //get keys from a JsonObject
-    public static Set<String> getKeys(JsonObject o) {
-        Set<String> keys = new TreeSet<String>();
-        for (Map.Entry<String, JsonElement> entry : o.entrySet()) {
-            keys.add(entry.getKey().trim());
-        }
-
-        return keys;
-    }
-
     //JsonPrimitive value as unique key
     public static boolean isSimpleValue(Object o) {
         return !(o instanceof JsonObject) && !(o instanceof JsonArray) && (o instanceof JsonPrimitive);
     }
 
-    // build hashmap, KEY is UniqueKey's Value, VALUE is JsonObject;
-    public static Map<JsonPrimitive, JsonObject> arrayOfJsonObjectToMap(JsonArray array, String uniqueKey) {
-        Map<JsonPrimitive, JsonObject> valueMap = new HashMap<JsonPrimitive, JsonObject>();
-        if (uniqueKey != null) {
-            for (int i = 0; i < array.size(); ++i) {
-                JsonObject jsonObject = (JsonObject) array.get(i);
-                JsonPrimitive id = jsonObject.get(uniqueKey).getAsJsonPrimitive();
-                valueMap.put(id, jsonObject);
-            }
-        }
-
-        return valueMap;
-    }
 
     //    refactor, using try with resource statement
     public static String convertFormattedJson2Raw(File f) throws IOException {
@@ -144,24 +168,6 @@ public class Utils {
 
     }
 
-    public static CompareResult applyFilters(CompareResult result, Set<String> filters) {
-
-        if (filters == null || filters.size() == 0) {
-            return result;
-        }
-
-        List<Failure> failures = result.getFailures();
-        Iterator<Failure> itr = failures.iterator();
-        while (itr.hasNext()) {
-            Failure f = itr.next();
-            String field = f.getField();
-            if (filters.contains(field)) {
-                itr.remove();
-            }
-        }
-
-        return new CompareResult(failures);
-    }
 
     public static boolean allSimpleValues(JsonArray array) {
         for (int i = 0; i < array.size(); ++i) {
@@ -180,6 +186,7 @@ public class Utils {
         }
         return true;
     }
+
 
 }
 

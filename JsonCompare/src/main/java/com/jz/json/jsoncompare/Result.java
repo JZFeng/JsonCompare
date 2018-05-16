@@ -6,33 +6,29 @@ import java.util.*;
  * @author jzfeng
  */
 
-public class CompareResult {
-    private CompareMode mode;
+public class Result {
+    private Mode mode;
     private List<Failure> failures = new ArrayList<Failure>();
 
     public boolean isPassed() {
         return (failures.size() == 0);
     }
 
-    CompareResult() {
-
-    }
-
-    CompareResult(CompareMode mode) {
+    Result(Mode mode) {
         this.mode = mode;
     }
 
-    CompareResult(CompareMode mode, List<Failure> failures) {
+    Result(Mode mode, List<Failure> failures) {
         this.mode = mode;
         this.failures.addAll(failures);
     }
 
 
-    public void setMode(CompareMode mode) {
+    public void setMode(Mode mode) {
         this.mode = mode;
     }
 
-    CompareResult(List<Failure> failures) {
+    public Result(List<Failure> failures) {
         this.failures.addAll(failures);
     }
 
@@ -58,7 +54,7 @@ public class CompareResult {
     }
 
 
-    public CompareResult applyFilter(Filter filter) throws WrongFilterException {
+    public Result applyFilter(Filter filter) throws WrongFilterException {
 
         List<Failure> result = new LinkedList<>();
 
@@ -66,17 +62,17 @@ public class CompareResult {
 
         if (mode != null && isValidFilter(filter)) {
 
-            List<FailureType> typesToIgnore = filter.types;
-            List<String> fieldsToIgnore = filter.fields;
+            List<FailureType> typesToIgnore = filter.ignoredTypes;
+            List<String> fieldsToIgnore = filter.ignoredPaths;
 
-            //apply types
+            //apply ignoredTypes
             for (FailureType type : typesToIgnore) {
                 if (map.containsKey(type)) {
                     map.remove(type);
                 }
             }
 
-            //apply fields
+            //apply ignoredPaths
             for (Map.Entry<FailureType, List<Failure>> entry : map.entrySet()) {
                 result.addAll(entry.getValue());
             }
@@ -87,7 +83,7 @@ public class CompareResult {
                 Iterator<Failure> itr = result.iterator();
                 while (itr.hasNext()) {
                     Failure failure = itr.next();
-                    if (failure.getField().matches(regex)) {
+                    if (failure.getJsonPath().matches(regex)) {
                         itr.remove();
                     }
                 }
@@ -96,7 +92,7 @@ public class CompareResult {
             System.out.println("Please correct your filter first.");
         }
 
-        return new CompareResult(mode, result);
+        return new Result(mode, result);
     }
 
     private String generateRegex(String field) {
@@ -127,7 +123,7 @@ public class CompareResult {
                 if (withDetails) {
                     sb.append(f.toString());
                 } else {
-                    sb.append(f.getField());
+                    sb.append(f.getJsonPath());
                 }
                 sb.append("\r\n");
             }
@@ -144,15 +140,15 @@ public class CompareResult {
         for (FailureType type : FailureType.values()) {
             set.add(type);
         }
-        for (FailureType type : filter.types) {
+        for (FailureType type : filter.ignoredTypes) {
             if (!set.contains(type)) {
                 throw new WrongFilterException("\"" + type + "\"" + "is not a valid Failure type.");
 //                System.out.println("\"" + type + "\"" + "is not a valid Failure type.");
             }
         }
 
-        //validate fields
-        for (String field : filter.fields) {
+        //validate ignoredPaths
+        for (String field : filter.ignoredPaths) {
             if (!isValidField(field, mode)) {
                 throw new WrongFilterException(field + " is not a valid field filter");
             }
@@ -162,9 +158,9 @@ public class CompareResult {
     }
 
 
-    //    private boolean isValidField(String field, CompareMode mode) {
-    private static boolean isValidField(String field, CompareMode mode) {
-        if (mode == CompareMode.LENIENT) {
+    //    private boolean isValidField(String field, Mode mode) {
+    private static boolean isValidField(String field, Mode mode) {
+        if (mode == Mode.LENIENT) {
             int index = field.indexOf("[");
             while (index != -1) {
                 char c = field.charAt(index + 1);
@@ -174,7 +170,7 @@ public class CompareResult {
                 field = field.substring(field.indexOf("]") + 1);
                 index = field.indexOf("[");
             }
-        } else if (mode == CompareMode.STRICT) {
+        } else if (mode == Mode.STRICT) {
             int index = field.indexOf("[");
             while (index != -1) {
                 char c = field.charAt(index + 1);

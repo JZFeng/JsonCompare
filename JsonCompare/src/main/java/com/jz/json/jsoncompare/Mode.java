@@ -6,6 +6,6 @@ package com.jz.json.jsoncompare;
  * However, it follows the strict orders in a JsonArray.
  * In LENIENT mode, it ignores both KEY orders of a JsonObject and element orders in a JsonArray.
  */
-public enum CompareMode {
+public enum Mode {
     STRICT, LENIENT;
 }

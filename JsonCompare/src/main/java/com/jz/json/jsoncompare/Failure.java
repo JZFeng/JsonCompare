@@ -6,43 +6,43 @@ import com.google.gson.JsonElement;
  * @author jzfeng
  */
 public class Failure {
-    private String field; //absolute JsonPath
+    private String jsonPath; //absolute JsonPath
     private FailureType failureType; //enum
     private JsonElement expected;
     private JsonElement actual;
     private String failureMsg;
 
-    Failure(String field, FailureType failureType, JsonElement expected, JsonElement actual, String failureMsg) {
-        this.field = field;
+    Failure(String jsonPath, FailureType failureType, JsonElement expected, JsonElement actual, String failureMsg) {
+        this.jsonPath = jsonPath;
         this.failureType = failureType;
         this.expected = expected;
         this.actual = actual;
         this.failureMsg = failureMsg;
     }
 
-    Failure(String field, FailureType failureType, JsonElement expected, JsonElement actual) {
-        this.field = field;
+    Failure(String jsonPath, FailureType failureType, JsonElement expected, JsonElement actual) {
+        this.jsonPath = jsonPath;
         this.failureType = failureType;
         this.expected = expected;
         this.actual = actual;
     }
 
-    Failure(String field, FailureType failureType) {
-        this.field = field;
+    Failure(String jsonPath, FailureType failureType) {
+        this.jsonPath = jsonPath;
         this.failureType = failureType;
         this.expected = null;
         this.actual = null;
     }
 
     Failure() {
-        this.field = null;
+        this.jsonPath = null;
         this.failureType = null;
         this.expected = null;
         this.actual = null;
     }
 
-    public String getField() {
-        return field;
+    public String getJsonPath() {
+        return jsonPath;
     }
 
     public FailureType getFailureType() {
@@ -61,8 +61,8 @@ public class Failure {
         return failureMsg;
     }
 
-    public void setField(String field) {
-        this.field = field;
+    public void setJsonPath(String jsonPath) {
+        this.jsonPath = jsonPath;
     }
 
     public void setFailureType(FailureType failureType) {
@@ -80,7 +80,7 @@ public class Failure {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("FIELD : " + field + "\r\n");
+        sb.append("FIELD : " + jsonPath + "\r\n");
         sb.append("Reason : " + failureMsg + "\r\n");
 //        sb.append("EXPECTED : " + getExpected() + "\r\n");
 //        sb.append("ACTUAL : " + getActual() + "\r\n");
