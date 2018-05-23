@@ -2,13 +2,14 @@ package jsonpath;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.jz.json.jsonpath.JsonElementWithPath;
+import com.jz.json.jsoncompare.JsonElementWithPath;
 import com.jz.json.jsonpath.JsonPath;
 import com.jz.json.utils.Utils;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static com.jz.json.jsonpath.JsonPath.get;
@@ -16,27 +17,32 @@ import static com.jz.json.jsonpath.JsonPath.get;
 
 public class TestJsonPath {
 
+    public static void main(String[] args) throws Exception {
+        JsonParser parser = new JsonParser();
+        String json = Utils.convertFormattedJson2Raw(new File("./src/test/java/jsonpath/us.json"));
+        JsonObject source = parser.parse(json).getAsJsonObject();
+
+        List<JsonElementWithPath> res = JsonPath.get(source, "$.modules.BINSUMMARY.minView.actions[0]");
+
+    }
+
+
     @Test
     public void testJsonPath_CaseSensitive_noIgnoredPaths() throws Exception {
         JsonParser parser = new JsonParser();
         String json = Utils.convertFormattedJson2Raw(new File("./src/test/java/jsonpath/us.json"));
         JsonObject source = parser.parse(json).getAsJsonObject();
 
-        int[] expectedSize = {1, 1, 1, 5, 5, 3, 1, 4, 23, 2, 2, 1};
+        int[] expectedSize = {1, 1, 5, 5, 3, 23, 2};
 
         final String[] us_paths = new String[]{
                 "$.modules.BINSUMMARY.minView.actions[0]"
                 , "modules.SELLERPRESENCE.sellerName.action.URL"
-                , "RETURNS.maxView.value.length()"
                 , "RETURNS.maxView.value[0:].label"
                 , "RETURNS.maxView.value[*].label.textSpans[0]"
                 , "RETURNS.maxView.value[1,3,4].label.textSpans[0].text"
-                , "RETURNS.maxView.value[1,3,4].label.textSpans[?(@.text == \"Refund\" || @.text == \"Return policy\")].text"
-                , "RETURNS.maxView.value[*].label.textSpans[?(@.text =~ \"(.*)\\d{3,}(.*)\" || @.text in {\"Have a nice day\", \"Return policy\"})]"
                 , "URL"
                 , "RETURNS.maxView.value[1:3]"
-                , "RETURNS.maxView.value[-3:-1]"
-                , "RETURNS.maxView.value[-2]"
         };
 
         for (int i = 0; i < us_paths.length; i++) {
@@ -53,21 +59,21 @@ public class TestJsonPath {
         String json = Utils.convertFormattedJson2Raw(new File("./src/test/java/jsonpath/us.json"));
         JsonObject source = parser.parse(json).getAsJsonObject();
 
-        int[] expectedSize = {1, 1, 1, 5, 5, 3, 1, 4, 26, 2, 2, 1};
+        int[] expectedSize = {1, 1, 5, 5, 3, 26, 2};
 
         final String[] us_paths = new String[]{
                 "$.modules.BINSUMMARY.minView.actions[0]"
                 , "modules.SELLERPRESENCE.sellerName.action.URL"
-                , "RETURNS.maxView.value.length()"
+//                , "RETURNS.maxView.value.length()"
                 , "RETURNS.maxView.value[0:].label"
                 , "RETURNS.maxView.value[*].label.textSpans[0]"
                 , "RETURNS.maxView.value[1,3,4].label.textSpans[0].text"
-                , "RETURNS.maxView.value[1,3,4].label.textSpans[?(@.text == \"Refund\" || @.text == \"Return policy\")].text"
-                , "RETURNS.maxView.value[*].label.textSpans[?(@.text =~ \"(.*)\\d{3,}(.*)\" || @.text in {\"Have a nice day\", \"Return policy\"})]"
+//                , "RETURNS.maxView.value[1,3,4].label.textSpans[?(@.text == \"Refund\" || @.text == \"Return policy\")].text"
+//                , "RETURNS.maxView.value[*].label.textSpans[?(@.text =~ \"(.*)\\d{3,}(.*)\" || @.text in {\"Have a nice day\", \"Return policy\"})]"
                 , "URL"
                 , "RETURNS.maxView.value[1:3]"
-                , "RETURNS.maxView.value[-3:-1]"
-                , "RETURNS.maxView.value[-2]"
+//                , "RETURNS.maxView.value[-3:-1]"
+//                , "RETURNS.maxView.value[-2]"
         };
 
         for (int i = 0; i < us_paths.length; i++) {
@@ -83,21 +89,21 @@ public class TestJsonPath {
         String json = Utils.convertFormattedJson2Raw(new File("./src/test/java/jsonpath/us.json"));
         JsonObject source = parser.parse(json).getAsJsonObject();
 
-        int[] expectedSize = {1, 1, 1, 4, 4, 2, 1, 4, 13, 2, 1, 0};
+        int[] expectedSize = {1, 1, 4, 4, 2, 13, 2};
 
         final String[] us_paths = new String[]{
                 "$.modules.BINSUMMARY.minView.actions[0]"
                 , "modules.SELLERPRESENCE.sellerName.action.URL"
-                , "RETURNS.maxView.value.length()"
+//                , "RETURNS.maxView.value.length()"
                 , "RETURNS.maxView.value[0:].label"
                 , "RETURNS.maxView.value[*].label.textSpans[0]"
                 , "RETURNS.maxView.value[1,3,4].label.textSpans[0].text"
-                , "RETURNS.maxView.value[1,3,4].label.textSpans[?(@.text == \"Refund\" || @.text == \"Return policy\")].text"
-                , "RETURNS.maxView.value[*].label.textSpans[?(@.text =~ \"(.*)\\d{3,}(.*)\" || @.text in {\"Have a nice day\", \"Return policy\"})]"
+//                , "RETURNS.maxView.value[1,3,4].label.textSpans[?(@.text == \"Refund\" || @.text == \"Return policy\")].text"
+//                , "RETURNS.maxView.value[*].label.textSpans[?(@.text =~ \"(.*)\\d{3,}(.*)\" || @.text in {\"Have a nice day\", \"Return policy\"})]"
                 , "URL"
                 , "RETURNS.maxView.value[1:3]"
-                , "RETURNS.maxView.value[-3:-1]"
-                , "RETURNS.maxView.value[-2]"
+//                , "RETURNS.maxView.value[-3:-1]"
+//                , "RETURNS.maxView.value[-2]"
         };
 
         final String[] us_ignoredPaths = new String[]{
@@ -123,21 +129,16 @@ public class TestJsonPath {
         String json = Utils.convertFormattedJson2Raw(new File("./src/test/java/jsonpath/us.json"));
         JsonObject source = parser.parse(json).getAsJsonObject();
 
-        int[] expectedSize = {1, 1, 1, 4, 4, 2, 1, 4, 15, 2, 1, 0};
+        int[] expectedSize = {1, 1, 4, 4, 2, 15, 2};
 
         final String[] us_paths = new String[]{
                 "$.modules.BINSUMMARY.minView.actions[0]"
                 , "modules.SELLERPRESENCE.sellerName.action.URL"
-                , "RETURNS.maxView.value.length()"
                 , "RETURNS.maxView.value[0:].label"
                 , "RETURNS.maxView.value[*].label.textSpans[0]"
                 , "RETURNS.maxView.value[1,3,4].label.textSpans[0].text"
-                , "RETURNS.maxView.value[1,3,4].label.textSpans[?(@.text == \"Refund\" || @.text == \"Return policy\")].text"
-                , "RETURNS.maxView.value[*].label.textSpans[?(@.text =~ \"(.*)\\d{3,}(.*)\" || @.text in {\"Have a nice day\", \"Return policy\"})]"
                 , "URL"
                 , "RETURNS.maxView.value[1:3]"
-                , "RETURNS.maxView.value[-3:-1]"
-                , "RETURNS.maxView.value[-2]"
         };
 
         final String[] us_ignoredPaths = new String[]{

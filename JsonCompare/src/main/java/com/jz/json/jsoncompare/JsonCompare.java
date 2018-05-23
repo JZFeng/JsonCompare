@@ -25,14 +25,14 @@ import static com.jz.json.utils.Utils.*;
 
 public class JsonCompare {
 
-    public static void main(String[] args) throws IOException, WrongFilterException {
+    public static void main(String[] args) throws IOException {
 
         JsonParser parser = new JsonParser();
 
-        String json = convertFormattedJson2Raw(new File("src/main/java/com/jz/json/jsoncompare/testdata/O.json"));
+        String json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/O.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("src/main/java/com/jz/json/jsoncompare/testdata/D.json"));
+        json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/D.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
 
@@ -40,9 +40,9 @@ public class JsonCompare {
                 new String[]{},
                 new String[]{});
 
-        Result result = compareJson(o1, o2, "LENIENT");
+        Result result = compareJson(o1, o2, "STRICT");
         result = result.applyFilter(filter);
-        System.out.println(result.getResultDetails());
+        System.out.println(result);
 
     }
 

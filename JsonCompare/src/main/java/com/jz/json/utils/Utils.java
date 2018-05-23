@@ -26,7 +26,6 @@ public class Utils {
         return keys;
     }
 
-
     // build hashmap, KEY is UniqueKey's Value, VALUE is JsonObject;
     public static Map<JsonPrimitive, JsonObject> arrayOfJsonObjectToMap(JsonArray array, String uniqueKey) {
         Map<JsonPrimitive, JsonObject> valueMap = new HashMap<JsonPrimitive, JsonObject>();

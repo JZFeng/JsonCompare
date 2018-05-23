@@ -54,7 +54,7 @@ public class Result {
     }
 
 
-    public Result applyFilter(Filter filter) throws WrongFilterException {
+    public Result applyFilter(Filter filter)  {
 
         List<Failure> result = new LinkedList<>();
 
@@ -132,7 +132,7 @@ public class Result {
         return sb.toString().trim();
     }
 
-    private boolean isValidFilter(Filter filter) throws WrongFilterException {
+    private boolean isValidFilter(Filter filter)  {
         Map<FailureType, List<Failure>> map = getFieldFailureTypeListMap(failures);
 
         //validate type
@@ -142,7 +142,7 @@ public class Result {
         }
         for (FailureType type : filter.ignoredTypes) {
             if (!set.contains(type)) {
-                throw new WrongFilterException("\"" + type + "\"" + "is not a valid Failure type.");
+                throw new WrongJsonPathException("\"" + type + "\"" + "is not a valid Failure type.");
 //                System.out.println("\"" + type + "\"" + "is not a valid Failure type.");
             }
         }
@@ -150,7 +150,7 @@ public class Result {
         //validate ignoredPaths
         for (String field : filter.ignoredPaths) {
             if (!isValidField(field, mode)) {
-                throw new WrongFilterException(field + " is not a valid field filter");
+                throw new WrongJsonPathException(field + " is not a valid field filter");
             }
         }
 
