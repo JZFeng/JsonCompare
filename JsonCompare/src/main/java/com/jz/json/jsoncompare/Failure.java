@@ -6,43 +6,43 @@ import com.google.gson.JsonElement;
  * @author jzfeng
  */
 public class Failure {
-    private String jsonPath; //absolute JsonPath
+    private String path; //absolute JsonPath
     private FailureType failureType; //enum
     private JsonElement expected;
     private JsonElement actual;
     private String failureMsg;
 
-    Failure(String jsonPath, FailureType failureType, JsonElement expected, JsonElement actual, String failureMsg) {
-        this.jsonPath = jsonPath;
+    Failure(String path, FailureType failureType, JsonElement expected, JsonElement actual, String failureMsg) {
+        this.path = path;
         this.failureType = failureType;
         this.expected = expected;
         this.actual = actual;
         this.failureMsg = failureMsg;
     }
 
-    Failure(String jsonPath, FailureType failureType, JsonElement expected, JsonElement actual) {
-        this.jsonPath = jsonPath;
+    Failure(String path, FailureType failureType, JsonElement expected, JsonElement actual) {
+        this.path = path;
         this.failureType = failureType;
         this.expected = expected;
         this.actual = actual;
     }
 
     Failure(String jsonPath, FailureType failureType) {
-        this.jsonPath = jsonPath;
+        this.path = jsonPath;
         this.failureType = failureType;
         this.expected = null;
         this.actual = null;
     }
 
     Failure() {
-        this.jsonPath = null;
+        this.path = null;
         this.failureType = null;
         this.expected = null;
         this.actual = null;
     }
 
-    public String getJsonPath() {
-        return jsonPath;
+    public String getPath() {
+        return path.trim();
     }
 
     public FailureType getFailureType() {
@@ -61,8 +61,8 @@ public class Failure {
         return failureMsg;
     }
 
-    public void setJsonPath(String jsonPath) {
-        this.jsonPath = jsonPath;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public void setFailureType(FailureType failureType) {
@@ -80,7 +80,7 @@ public class Failure {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("FIELD : " + jsonPath + "\r\n");
+        sb.append("FIELD : " + path + "\r\n");
         sb.append("Reason : " + failureMsg + "\r\n");
 //        sb.append("EXPECTED : " + getExpected() + "\r\n");
 //        sb.append("ACTUAL : " + getActual() + "\r\n");

@@ -25,7 +25,7 @@ import static com.jz.json.utils.Utils.*;
 
 public class JsonCompare {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
         JsonParser parser = new JsonParser();
 
@@ -37,17 +37,23 @@ public class JsonCompare {
 
 
         Filter filter = new Filter(
-                new String[]{},
-                new String[]{});
+                new String[]{"UNEXPECTED_FIELD"},
 
-        Result result = compareJson(o1, o2, "STRICT");
-        result = result.applyFilter(filter);
+                new String[]{"$.listing.listingProperties[2].propertyValues[*]",
+                        "listing.listingLifecycle.scheduledStartDate.value",
+                        "listing.termsAndPolicies.logisticsTerms.logisticsPlan[0:]"},
+
+                new String[]{"listing.tradingSummary.lastVisitDate"}
+                );
+
+        Result result = compareJson(o1, o2, "STRICT", filter);
+
         System.out.println(result);
 
     }
 
     public static Result compareJson(JsonObject o1, JsonObject o2) {
-        Mode mode = Mode.LENIENT;
+        Mode mode = Mode.STRICT;
         Result r = new Result(mode);
         compareJson("", (JsonElement) o1, (JsonElement) o2, r, mode);
         return r;
@@ -60,11 +66,18 @@ public class JsonCompare {
         return r;
     }
 
+    public static Result compareJson(JsonObject o1, JsonObject o2, String m, Filter filter)  {
+        Result result = compareJson( o1,  o2,  m);
+        return result.applyFilter(filter, o1, o2);
+    }
+
+
     private static Result compareJson(String parentLevel, JsonObject o1, JsonObject o2, Mode mode) {
         Result r = new Result(mode);
         compareJson(parentLevel, (JsonElement) o1, (JsonElement) o2, r, mode);
         return r;
     }
+
 
     private static void compareJson(
             String parentLevel, JsonElement o1, JsonElement o2, Result result, Mode mode) {

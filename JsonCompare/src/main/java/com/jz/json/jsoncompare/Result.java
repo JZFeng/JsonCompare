@@ -1,6 +1,12 @@
 package com.jz.json.jsoncompare;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.jz.json.jsonpath.IFilter;
 import java.util.*;
+
+import static com.jz.json.jsonpath.JsonPath.*;
+import static com.jz.json.utils.Utils.getJsonArrayMap;
 
 /**
  * @author jzfeng
@@ -14,11 +20,15 @@ public class Result {
         return (failures.size() == 0);
     }
 
-    Result(Mode mode) {
+    public Result(Mode mode) {
         this.mode = mode;
     }
 
-    Result(Mode mode, List<Failure> failures) {
+    public Result(List<Failure> failures) {
+        this.failures.addAll(failures);
+    }
+
+    public Result(Mode mode, List<Failure> failures) {
         this.mode = mode;
         this.failures.addAll(failures);
     }
@@ -28,8 +38,12 @@ public class Result {
         this.mode = mode;
     }
 
-    public Result(List<Failure> failures) {
-        this.failures.addAll(failures);
+    public Mode getMode() {
+        return this.mode;
+    }
+
+    public List<Failure> getFailures() {
+        return failures;
     }
 
     public boolean addFailure(Failure failure) {
@@ -45,65 +59,76 @@ public class Result {
         return getResultInfo(true);
     }
 
-    public List<Failure> getFailures() {
-        return failures;
-    }
-
     public int totalFailures() {
         return failures.size();
     }
 
-
-    public Result applyFilter(Filter filter)  {
-
-        List<Failure> result = new LinkedList<>();
-
-        Map<FailureType, List<Failure>> map = getFieldFailureTypeListMap(failures);
-
-        if (mode != null && isValidFilter(filter)) {
-
-            List<FailureType> typesToIgnore = filter.ignoredTypes;
-            List<String> fieldsToIgnore = filter.ignoredPaths;
-
+    public Result applyFilter(Filter filter, JsonObject source, JsonObject dest)  {
+        if (mode != null) {
             //apply ignoredTypes
-            for (FailureType type : typesToIgnore) {
-                if (map.containsKey(type)) {
-                    map.remove(type);
+            boolean ignoreCase = filter.ignoreCase;
+            Set<FailureType> typesToIgnore = new HashSet<>();
+            for(FailureType type : filter.types) {
+                typesToIgnore.add(type);
+            }
+            Iterator<Failure> itr = failures.iterator();
+            while(itr.hasNext()) {
+                Failure failure = itr.next();
+                if(typesToIgnore.contains(failure.getFailureType())) {
+                    itr.remove();
                 }
             }
 
             //apply ignoredPaths
-            for (Map.Entry<FailureType, List<Failure>> entry : map.entrySet()) {
-                result.addAll(entry.getValue());
-            }
+            Map<String, JsonArray> cachedJsonArrays = getJsonArrayMap(source, ignoreCase);
+            String[] paths = filter.pathsOrg.toArray(new String[filter.pathsOrg.size()]);
+            failures = applyIgnoredPaths(paths, ignoreCase, source, cachedJsonArrays);
 
-            for (String field : fieldsToIgnore) {
-                String regex = generateRegex(field);
-
-                Iterator<Failure> itr = result.iterator();
-                while (itr.hasNext()) {
-                    Failure failure = itr.next();
-                    if (failure.getJsonPath().matches(regex)) {
-                        itr.remove();
-                    }
-                }
-            }
+            cachedJsonArrays = getJsonArrayMap(dest, ignoreCase);
+            paths = filter.pathsDest.toArray(new String[filter.pathsDest.size()]);
+            failures = applyIgnoredPaths(paths, ignoreCase, dest, cachedJsonArrays);
         } else {
             System.out.println("Please correct your filter first.");
         }
 
-        return new Result(mode, result);
+        return this;
     }
 
-    private String generateRegex(String field) {
-        if (field.startsWith("$")) {
-            field = "\\$" + field.substring(1);
+
+
+    public List<Failure> applyIgnoredPaths(
+            String[] ignoredPaths,
+            boolean ignoreCase,
+            JsonObject source,
+            Map<String, JsonArray> cachedJsonArrays)  {
+        if (ignoredPaths == null || ignoredPaths.length == 0) {
+            return failures;
         }
 
-        String regex = "(.*)(" + (field.replaceAll("(\\[)(\\d{0,})(\\])", "\\\\" + "$1" + "$2" + "\\\\" + "$3")) + ")(.*)";
+        ignoredPaths = updatePaths2Full(ignoredPaths, source);
+        Set<String> absolutePaths = getFullPathsWithoutArray(ignoredPaths, source); // for performance purpose;
+        Map<String, List<IFilter>> ignoredFilters = getFilters(ignoredPaths, ignoreCase);
+        Map<String, List<IFilter>> ignoredMatchedFilters = updateFilters2Full(cachedJsonArrays, ignoredFilters);
 
-        return regex;
+        //get regex for each ignoredPath
+        List<String> regexs = new ArrayList<>();
+        for (String ignoredPath : ignoredPaths) {
+            if (ignoredPath.indexOf('[') == -1) {
+                regexs.add(generateRegex(ignoredPath.trim(), ignoreCase) + ".*");
+            }
+        }
+
+        Iterator<Failure> itr = failures.iterator();
+        while (itr.hasNext()) {
+            String level = itr.next().getPath();
+            if(isPathMatchingAbsolutePaths(level, absolutePaths) || isPathMatchingRegxs(ignoreCase ? level.toLowerCase() : level, regexs) || isPathMatchingIgnoredFilters(cachedJsonArrays, ignoreCase ? level.toLowerCase() : level, ignoredMatchedFilters)) {
+                itr.remove();
+            }
+        }
+
+        return failures;
     }
+
 
     private String getResultInfo(boolean withDetails) {
         StringBuilder sb = new StringBuilder();
@@ -111,7 +136,7 @@ public class Result {
             sb.append("Total " + failures.size() + " failures : ");
         }
 
-        Map<FailureType, List<Failure>> map = getFieldFailureTypeListMap(failures);
+        Map<FailureType, List<Failure>> map = getFailureTypeListMap(failures);
 
         for (Map.Entry<FailureType, List<Failure>> entry : map.entrySet()) {
             FailureType type = entry.getKey();
@@ -123,7 +148,7 @@ public class Result {
                 if (withDetails) {
                     sb.append(f.toString());
                 } else {
-                    sb.append(f.getJsonPath());
+                    sb.append(f.getPath());
                 }
                 sb.append("\r\n");
             }
@@ -132,62 +157,8 @@ public class Result {
         return sb.toString().trim();
     }
 
-    private boolean isValidFilter(Filter filter)  {
-        Map<FailureType, List<Failure>> map = getFieldFailureTypeListMap(failures);
-
-        //validate type
-        Set<FailureType> set = new HashSet<>();
-        for (FailureType type : FailureType.values()) {
-            set.add(type);
-        }
-        for (FailureType type : filter.ignoredTypes) {
-            if (!set.contains(type)) {
-                throw new WrongJsonPathException("\"" + type + "\"" + "is not a valid Failure type.");
-//                System.out.println("\"" + type + "\"" + "is not a valid Failure type.");
-            }
-        }
-
-        //validate ignoredPaths
-        for (String field : filter.ignoredPaths) {
-            if (!isValidField(field, mode)) {
-                throw new WrongJsonPathException(field + " is not a valid field filter");
-            }
-        }
-
-        return true;
-    }
-
-
-    //    private boolean isValidField(String field, Mode mode) {
-    private static boolean isValidField(String field, Mode mode) {
-        if (mode == Mode.LENIENT) {
-            int index = field.indexOf("[");
-            while (index != -1) {
-                char c = field.charAt(index + 1);
-                if (c != ']') {
-                    return false;
-                }
-                field = field.substring(field.indexOf("]") + 1);
-                index = field.indexOf("[");
-            }
-        } else if (mode == Mode.STRICT) {
-            int index = field.indexOf("[");
-            while (index != -1) {
-                char c = field.charAt(index + 1);
-                if (c == ']') {
-                    return false;
-                }
-                field = field.substring(field.indexOf("]") + 1);
-                index = field.indexOf("[");
-            }
-        }
-
-        return true;
-    }
-
-
-    private Map<FailureType, List<Failure>> getFieldFailureTypeListMap(List<Failure> failures) {
-        Map<FailureType, List<Failure>> map = new HashMap<FailureType, List<Failure>>();
+    private Map<FailureType, List<Failure>> getFailureTypeListMap(List<Failure> failures) {
+        Map<FailureType, List<Failure>> map = new HashMap<>();
         for (Failure f : failures) {
             FailureType type = f.getFailureType();
             if (!map.containsKey(type)) {

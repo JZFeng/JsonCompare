@@ -8,7 +8,7 @@ import java.util.*;
  */
 
 //  x >= start && x <= end
-public class Range {
+public class Range implements IFilter {
     private int start;
     private int end;
 

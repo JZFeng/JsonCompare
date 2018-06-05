@@ -9,43 +9,46 @@ import java.util.Set;
  * @author jzfeng
  */
 public class Filter {
-    List<FailureType> ignoredTypes = new ArrayList<FailureType>();
-    List<String> ignoredPaths = new ArrayList<String>();
+    List<FailureType> types = new ArrayList<FailureType>();
+    List<String> pathsOrg = new ArrayList<String>();
+    List<String> pathsDest = new ArrayList<>();
+    boolean ignoreCase;
 
-    Filter(String[] ignoredTypes, String[] ignoredPaths) {
+
+    public Filter(String[] types, String[] pathsOrg, String[] pathsDest) {
         Set<String> set = new HashSet<>();
         for (FailureType type : FailureType.values()) {
             set.add(type.name());
         }
-        for(String type : ignoredTypes) {
-            if(set.contains(type)) {
-                this.ignoredTypes.add(FailureType.valueOf(type));
+
+        for (String type : types) {
+            if (set.contains(type)) {
+                this.types.add(FailureType.valueOf(type));
             }
         }
 
-        for (String field : ignoredPaths) {
-            if(field.length() > 0) {
-                this.ignoredPaths.add(field);
+        for (String path : pathsOrg) {
+            if (path.trim().length() > 0) {
+                this.pathsOrg.add(path.trim());
+            }
+        }
+
+        for (String path : pathsDest) {
+            if (path.trim().length() > 0) {
+                this.pathsDest.add(path.trim());
             }
         }
     }
 
-
-    Filter(FailureType[] ignoredTypes, String[] ignoredPaths) {
-        for (FailureType type : ignoredTypes) {
-            this.ignoredTypes.add(type);
-        }
-
-        for (String field : ignoredPaths) {
-            this.ignoredPaths.add(field);
-        }
-
+    Filter(String[] types, String[] pathsOrg, String[] pathsDest, boolean ignoreCase) {
+        this(types, pathsOrg, pathsDest);
+        this.ignoreCase = ignoreCase;
     }
 
-    Filter(List<FailureType> ignoredTypes, List<String> ignoredPaths) {
-        this.ignoredTypes = ignoredTypes;
-        this.ignoredPaths = ignoredPaths;
+    Filter(String[] types, String[] pathsOrg) {
+        this(types, pathsOrg, new String[]{});
     }
+
 
 }
 
