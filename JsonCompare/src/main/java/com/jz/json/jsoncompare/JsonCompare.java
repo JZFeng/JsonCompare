@@ -184,7 +184,7 @@ public class JsonCompare {
             result.getFailures().addAll(r);
         } else if (allJsonObjects(expected)) {
             compareJsonArrayOfJsonObjects(parentPath, expected, actual, result, mode);
-        } else if(allJsonArrayss(expected)) {
+        } else if (allJsonArrayss(expected)) {
             //to-do
         }
 
@@ -270,7 +270,7 @@ public class JsonCompare {
                 failure = new Failure(expectedMap.get(o), FailureType.MISSING_JSONARRAY_ELEMENT, o, null, failureMsg);
                 failure.setExpected(o);
                 result.add(failure);
-            } else if (actualCount.get(o) != expectedCount.get(o)) {
+            } else if (!actualCount.get(o).equals(expectedCount.get(o))) {
                 failureMsg = "Occurrence of " + o + " : " + expectedCount.get(o) + " VS " + actualCount.get(o);
                 failure = new Failure(expectedMap.get(o), FailureType.DIFFERENT_OCCURENCE_JSONARRAY_ELEMENT, o, o, failureMsg);
                 result.add(failure);
@@ -310,18 +310,12 @@ public class JsonCompare {
                 if (expectedElement instanceof JsonObject) {
                     r = compareJson(parentPath + "[" + i + "]", (JsonObject) expectedElement, (JsonObject) actualElement, mode);
                 } else if (expectedElement instanceof JsonArray) {
-                    r = compareJsonArray(parentPath + "[" + i + "]" , (JsonArray) expectedElement, (JsonArray) actualElement, mode);
-
-//                    if (r.isPassed() == true) {
-//                        matched.add(j);
-//                        matchFound = true;
-//                        break;
-//                    }
-                } else if(expectedElement instanceof JsonPrimitive) {
-                    r = compareJsonPrimitive(parentPath + "[" + i + "]" , (JsonPrimitive) expectedElement, (JsonPrimitive) actualElement, mode);
+                    r = compareJsonArray(parentPath + "[" + i + "]", (JsonArray) expectedElement, (JsonArray) actualElement, mode);
+                } else if (expectedElement instanceof JsonPrimitive) {
+                    r = compareJsonPrimitive(parentPath + "[" + i + "]", (JsonPrimitive) expectedElement, (JsonPrimitive) actualElement, mode);
                 }
 
-                if(expectedElement.equals(actualElement) || r.isPassed()) {
+                if (expectedElement.equals(actualElement) || r.isPassed()) {
                     matched.add(j);
                     matchFound = true;
                     break;

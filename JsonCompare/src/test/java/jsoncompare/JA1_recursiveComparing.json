@@ -1,0 +1,17 @@
+{
+  "courses": [
+    {
+      "id": "physics",
+      "score": "90"
+    },
+    {
+      "id": "english",
+      "score": "90",
+      "grade": "A"
+    },
+    {
+      "id": "math",
+      "score": "80"
+    }
+  ]
+}

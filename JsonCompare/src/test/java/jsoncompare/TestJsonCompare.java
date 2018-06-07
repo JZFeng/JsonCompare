@@ -53,7 +53,7 @@ public class TestJsonCompare {
     }
 
     @Test
-    public void testJsonCompare_unequal_JsonArray_lenient() throws Exception {
+    public void testJsonCompare_non_recursive_JsonArray_lenient() throws Exception {
         JsonParser parser = new JsonParser();
         String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JsonArray1.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
@@ -65,6 +65,21 @@ public class TestJsonCompare {
         System.out.println(result.getResultDetails());
         Assert.assertTrue("Two JsonObjects are equal", result.getFailures().size() == 7);
     }
+
+    @Test
+    public void testJsonCompare_recursive_JsonArray_lenient() throws Exception {
+        JsonParser parser = new JsonParser();
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA1_recursiveComparing.json"));
+        JsonObject o1 = parser.parse(json).getAsJsonObject();
+
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA2_recursiveComparing.json"));
+        JsonObject o2 = parser.parse(json).getAsJsonObject();
+
+        Result result = compareJson(o1, o2, "LENIENT");
+        System.out.println(result.getResultDetails());
+        Assert.assertTrue("Two JsonObjects are equal", result.getFailures().size() == 2);
+    }
+
 
     @Test
     public void testJsonCompare_jsonObjects_lenient() throws IOException {
