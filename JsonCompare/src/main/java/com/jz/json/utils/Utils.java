@@ -51,12 +51,13 @@ public class Utils {
     public static Map<JsonElement, String> jsonArrayToMap(String parentPath, JsonArray expected) {
         Map<JsonElement, String> jsonElements = new LinkedHashMap<>(expected.size());
         for (int i = 0; i < expected.size(); ++i) {
-            if(!jsonElements.containsKey(expected.get(i))) {
+            if (!jsonElements.containsKey(expected.get(i))) {
                 jsonElements.put(expected.get(i), parentPath + "[" + i + "]");
             }
         }
         return jsonElements;
     }
+
     /**
      * Creates a cardinality map from {@code coll}.
      *

@@ -1,5 +1,8 @@
-
 package com.jz.json.jsonpath;
+
+/**
+ * @author jzfeng
+ */
 
 //  ==,!=,>,<,>=, <=,  "=~", "in", "nin", "subsetof", "size", "empty", "notempty"
 public enum Operators {

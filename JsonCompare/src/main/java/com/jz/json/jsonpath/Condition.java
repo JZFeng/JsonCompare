@@ -112,9 +112,9 @@ public class Condition implements IFilter {
      * @param r sample parameter:  r = "?(@.author=="Evelyn Waugh" && @.price > 12 || @.category == "reference")"
      * @return
      */
-    public static List<Condition> getConditions(String r)  {
+    public static List<Condition> getConditions(String r) {
         List<Condition> conditions = new ArrayList<>();
-        if(r == null || r.length() == 0 || !r.contains("@.")) {
+        if (r == null || r.length() == 0 || !r.contains("@.")) {
             return conditions;
         }
 
@@ -206,10 +206,12 @@ public class Condition implements IFilter {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null)
+        if (obj == null) {
             return false;
-        if (this == obj)
+        }
+        if (this == obj) {
             return true;
+        }
         if (obj instanceof Condition) {
             Condition condition = (Condition) obj;
             if (this.left.equals(condition.left) && this.operator.equals(condition.operator) && this.right.equals(condition.right)) {

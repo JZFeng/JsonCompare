@@ -3,6 +3,7 @@ package com.jz.json.jsoncompare;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jz.json.jsonpath.IFilter;
+
 import java.util.*;
 
 import static com.jz.json.jsonpath.JsonPath.*;
@@ -63,18 +64,18 @@ public class Result {
         return failures.size();
     }
 
-    public Result applyFilter(Filter filter, JsonObject source, JsonObject dest)  {
+    public Result applyFilter(Filter filter, JsonObject source, JsonObject dest) {
         if (mode != null) {
             //apply ignoredTypes
             boolean ignoreCase = filter.ignoreCase;
             Set<FailureType> typesToIgnore = new HashSet<>();
-            for(FailureType type : filter.types) {
+            for (FailureType type : filter.types) {
                 typesToIgnore.add(type);
             }
             Iterator<Failure> itr = failures.iterator();
-            while(itr.hasNext()) {
+            while (itr.hasNext()) {
                 Failure failure = itr.next();
-                if(typesToIgnore.contains(failure.getFailureType())) {
+                if (typesToIgnore.contains(failure.getFailureType())) {
                     itr.remove();
                 }
             }
@@ -95,12 +96,11 @@ public class Result {
     }
 
 
-
     public List<Failure> applyIgnoredPaths(
             String[] ignoredPaths,
             boolean ignoreCase,
             JsonObject source,
-            Map<String, JsonArray> cachedJsonArrays)  {
+            Map<String, JsonArray> cachedJsonArrays) {
         if (ignoredPaths == null || ignoredPaths.length == 0) {
             return failures;
         }
@@ -121,7 +121,7 @@ public class Result {
         Iterator<Failure> itr = failures.iterator();
         while (itr.hasNext()) {
             String level = itr.next().getPath();
-            if(isPathMatchingAbsolutePaths(level, absolutePaths) || isPathMatchingRegxs(ignoreCase ? level.toLowerCase() : level, regexs) || isPathMatchingIgnoredFilters(cachedJsonArrays, ignoreCase ? level.toLowerCase() : level, ignoredMatchedFilters)) {
+            if (isPathMatchingAbsolutePaths(level, absolutePaths) || isPathMatchingRegxs(ignoreCase ? level.toLowerCase() : level, regexs) || isPathMatchingIgnoredFilters(cachedJsonArrays, ignoreCase ? level.toLowerCase() : level, ignoredMatchedFilters)) {
                 itr.remove();
             }
         }
