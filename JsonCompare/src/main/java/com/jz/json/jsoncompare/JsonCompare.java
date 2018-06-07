@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonParser;
-import com.jz.json.utils.Utils;
 
 import java.io.File;
 import java.util.Set;
@@ -28,10 +27,10 @@ public class JsonCompare {
 
         JsonParser parser = new JsonParser();
 
-        String json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/JsonArray1.json"));
+        String json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/JA1.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/JsonArray2.json"));
+        json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/JA2.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
 
@@ -180,12 +179,9 @@ public class JsonCompare {
         if (mode == Mode.STRICT) {
             compareJsonArrayWithStrictOrder(parentPath, expected, actual, result, mode);
         } else if (allSimpleValues(expected)) {
-            List<Failure> r = compareJsonArrayOfJsonPrimitives(parentPath, expected, actual);
-            result.getFailures().addAll(r);
+            compareJsonArrayOfJsonPrimitives(parentPath, expected, actual, result, mode);
         } else if (allJsonObjects(expected)) {
             compareJsonArrayOfJsonObjects(parentPath, expected, actual, result, mode);
-        } else if (allJsonArrayss(expected)) {
-            //to-do
         }
 
     }
@@ -227,7 +223,6 @@ public class JsonCompare {
             return;
         }
 
-//        System.out.println("Unique key is " + uniqueKey);
         Map<JsonPrimitive, JsonElementWithPath> expectedValueMap = arrayOfJsonObjectToMap(parentPath, expected, uniqueKey);
         Map<JsonPrimitive, JsonElementWithPath> actualValueMap = arrayOfJsonObjectToMap(parentPath, actual, uniqueKey);
         for (JsonPrimitive id : expectedValueMap.keySet()) {
@@ -240,8 +235,7 @@ public class JsonCompare {
             }
             JsonElementWithPath expectedValue = expectedValueMap.get(id);
             JsonElementWithPath actualValue = actualValueMap.get(id);
-            //更新parent level
-            compareJson(expectedValue.getPath(), expectedValue.getJsonElement(), actualValue.getJsonElement(), result, mode); //或者是currentLevelOfOrg[*] ???
+            compareJson(expectedValue.getPath(), expectedValue.getJsonElement(), actualValue.getJsonElement(), result, mode);
         }
         for (JsonPrimitive id : actualValueMap.keySet()) {
             if (!expectedValueMap.containsKey(id)) {
@@ -254,9 +248,8 @@ public class JsonCompare {
 
     }
 
-    private static List<Failure> compareJsonArrayOfJsonPrimitives(
-            String parentPath, JsonArray expected, JsonArray actual) {
-        List<Failure> result = new ArrayList<>();
+    private static void compareJsonArrayOfJsonPrimitives(
+            String parentPath, JsonArray expected, JsonArray actual, Result result, Mode mode) {
         Map<JsonElement, Integer> expectedCount = getCardinalityMap(jsonArrayToList(expected));
         Map<JsonElement, Integer> actualCount = getCardinalityMap(jsonArrayToList(actual));
         Map<JsonElement, String> expectedMap = jsonArrayToMap(parentPath, expected);
@@ -269,11 +262,11 @@ public class JsonCompare {
                 failureMsg = "Missing JsonArray Element " + o + " in actual JsonArray";
                 failure = new Failure(expectedMap.get(o), FailureType.MISSING_JSONARRAY_ELEMENT, o, null, failureMsg);
                 failure.setExpected(o);
-                result.add(failure);
+                result.addFailure(failure);
             } else if (!actualCount.get(o).equals(expectedCount.get(o))) {
                 failureMsg = "Occurrence of " + o + " : " + expectedCount.get(o) + " VS " + actualCount.get(o);
                 failure = new Failure(expectedMap.get(o), FailureType.DIFFERENT_OCCURENCE_JSONARRAY_ELEMENT, o, o, failureMsg);
-                result.add(failure);
+                result.addFailure(failure);
             }
         }
 
@@ -282,11 +275,10 @@ public class JsonCompare {
                 failureMsg = "Unexpected JsonArray Element " + o + " in actual JsonArray";
                 failure = new Failure(actualMap.get(o), FailureType.UNEXPECTED_JSONARRAY_ELEMENT, null, o, failureMsg);
                 failure.setActual(o);
-                result.add(failure);
+                result.addFailure(failure);
             }
         }
 
-        return result;
     }
 
 

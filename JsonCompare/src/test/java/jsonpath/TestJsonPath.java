@@ -17,16 +17,6 @@ import static com.jz.json.jsonpath.JsonPath.get;
 
 public class TestJsonPath {
 
-    public static void main(String[] args) throws Exception {
-        JsonParser parser = new JsonParser();
-        String json = Utils.convertFormattedJson2Raw(new File("./src/test/java/jsonpath/us.json"));
-        JsonObject source = parser.parse(json).getAsJsonObject();
-
-        List<JsonElementWithPath> res = JsonPath.get(source, "$.modules.BINSUMMARY.minView.actions[0]");
-
-    }
-
-
     @Test
     public void testJsonPath_CaseSensitive_noIgnoredPaths() throws Exception {
         JsonParser parser = new JsonParser();

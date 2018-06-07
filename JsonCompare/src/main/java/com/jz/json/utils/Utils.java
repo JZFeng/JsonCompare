@@ -175,15 +175,6 @@ public class Utils {
         return true;
     }
 
-    public static boolean allJsonArrayss(JsonArray array) {
-        for (int i = 0; i < array.size(); ++i) {
-            if (!(array.get(i) instanceof JsonArray)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     // save JsonArray to map, in order to reduce time complexibility
     public static Map<String, JsonArray> getJsonArrayMap(JsonObject source, boolean ignoreCase) {
         Map<String, JsonArray> result = new LinkedHashMap<>();

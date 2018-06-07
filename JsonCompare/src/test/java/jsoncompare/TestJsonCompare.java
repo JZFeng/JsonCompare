@@ -41,10 +41,10 @@ public class TestJsonCompare {
     public void testJsonCompare_equal_JsonArray_lenient() throws Exception {
 
         JsonParser parser = new JsonParser();
-        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA1.json"));
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA1_equal.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA2.json"));
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA2_equal.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
         Result result = compareJson(o1, o2, "LENIENT");
@@ -55,10 +55,10 @@ public class TestJsonCompare {
     @Test
     public void testJsonCompare_non_recursive_JsonArray_lenient() throws Exception {
         JsonParser parser = new JsonParser();
-        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JsonArray1.json"));
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA1_non_recursive.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JsonArray2.json"));
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA2_non_recursive.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
         Result result = compareJson(o1, o2, "LENIENT");
@@ -69,10 +69,10 @@ public class TestJsonCompare {
     @Test
     public void testJsonCompare_recursive_JsonArray_lenient() throws Exception {
         JsonParser parser = new JsonParser();
-        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA1_recursiveComparing.json"));
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA1_recursive.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA2_recursiveComparing.json"));
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA2_recursive.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
         Result result = compareJson(o1, o2, "LENIENT");
@@ -82,13 +82,28 @@ public class TestJsonCompare {
 
 
     @Test
+    public void testJsonCompare_allJsonArrays() throws Exception {
+        JsonParser parser = new JsonParser();
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA1_allJsonArrays.json"));
+        JsonObject o1 = parser.parse(json).getAsJsonObject();
+
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JA2_allJsonArrays.json"));
+        JsonObject o2 = parser.parse(json).getAsJsonObject();
+
+        Result result = compareJson(o1, o2, "LENIENT");
+        System.out.println(result.getResultDetails());
+        Assert.assertTrue("Two JsonObjects are equal", result.getFailures().size() == 0);
+    }
+
+
+    @Test
     public void testJsonCompare_jsonObjects_lenient() throws IOException {
 
         JsonParser parser = new JsonParser();
-        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/O.json"));
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/Origin.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/D.json"));
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/Destination.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
         Result result = compareJson(o1, o2, "LENIENT");
@@ -100,10 +115,10 @@ public class TestJsonCompare {
     public void testJsonCompare_jsonObjects_strict() throws Exception {
 
         JsonParser parser = new JsonParser();
-        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/O.json"));
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/Origin.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/D.json"));
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/Destination.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
         Result result = compareJson(o1, o2, "STRICT");
@@ -115,10 +130,10 @@ public class TestJsonCompare {
     public void testJsonCompare_jsonObjects_lenient_with_filter() throws Exception {
 
         JsonParser parser = new JsonParser();
-        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/O.json"));
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/Origin.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/D.json"));
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/Destination.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
         Result result = compareJson(o1, o2, "STRICT");
@@ -129,10 +144,10 @@ public class TestJsonCompare {
     public void testJsonCompare_jsonObjects_strict_with_filter() throws Exception {
 
         JsonParser parser = new JsonParser();
-        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/O.json"));
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/Origin.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/D.json"));
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/Destination.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
         Filter filter = new Filter(
