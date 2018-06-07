@@ -2,8 +2,6 @@ package com.jz.json.utils;
 
 import com.google.gson.*;
 import com.jz.json.jsoncompare.JsonElementWithPath;
-import com.jz.json.jsoncompare.Result;
-import com.jz.json.jsoncompare.Failure;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,38 +26,19 @@ public class Utils {
     }
 
     // build hashmap, KEY is UniqueKey's Value, VALUE is JsonObject;
-    public static Map<JsonPrimitive, JsonObject> arrayOfJsonObjectToMap(JsonArray array, String uniqueKey) {
-        Map<JsonPrimitive, JsonObject> valueMap = new HashMap<JsonPrimitive, JsonObject>();
+    public static Map<JsonPrimitive, JsonElementWithPath> arrayOfJsonObjectToMap(
+            String parentLevel, JsonArray array, String uniqueKey) {
+        Map<JsonPrimitive, JsonElementWithPath> valueMap = new HashMap<JsonPrimitive, JsonElementWithPath>();
         if (uniqueKey != null) {
             for (int i = 0; i < array.size(); ++i) {
                 JsonObject jsonObject = (JsonObject) array.get(i);
                 JsonPrimitive id = jsonObject.get(uniqueKey).getAsJsonPrimitive();
-                valueMap.put(id, jsonObject);
+                valueMap.put(id, new JsonElementWithPath(jsonObject, parentLevel + "[" + String.valueOf(i) + "]"));
             }
         }
 
         return valueMap;
     }
-
-    public static Result applyFilters(Result result, Set<String> filters) {
-
-        if (filters == null || filters.size() == 0) {
-            return result;
-        }
-
-        List<Failure> failures = result.getFailures();
-        Iterator<Failure> itr = failures.iterator();
-        while (itr.hasNext()) {
-            Failure f = itr.next();
-            String field = f.getPath();
-            if (filters.contains(field)) {
-                itr.remove();
-            }
-        }
-
-        return new Result(failures);
-    }
-
 
     public static List<JsonElement> jsonArrayToList(JsonArray expected) {
         List<JsonElement> jsonElements = new ArrayList<JsonElement>(expected.size());
@@ -69,6 +48,15 @@ public class Utils {
         return jsonElements;
     }
 
+    public static Map<JsonElement, String> jsonArrayToMap(String parentPath, JsonArray expected) {
+        Map<JsonElement, String> jsonElements = new LinkedHashMap<>(expected.size());
+        for (int i = 0; i < expected.size(); ++i) {
+            if(!jsonElements.containsKey(expected.get(i))) {
+                jsonElements.put(expected.get(i), parentPath + "[" + i + "]");
+            }
+        }
+        return jsonElements;
+    }
     /**
      * Creates a cardinality map from {@code coll}.
      *
@@ -187,10 +175,19 @@ public class Utils {
         return true;
     }
 
+    public static boolean allJsonArrayss(JsonArray array) {
+        for (int i = 0; i < array.size(); ++i) {
+            if (!(array.get(i) instanceof JsonArray)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // save JsonArray to map, in order to reduce time complexibility
-    public static Map<String, JsonArray> getJsonArrayMap(JsonObject source , boolean ignoreCase)  {
+    public static Map<String, JsonArray> getJsonArrayMap(JsonObject source, boolean ignoreCase) {
         Map<String, JsonArray> result = new LinkedHashMap<>();
-        if(source == null || source.isJsonNull() || !source.isJsonObject()) {
+        if (source == null || source.isJsonNull() || !source.isJsonObject()) {
             return result;
         }
 
@@ -201,7 +198,7 @@ public class Utils {
             //Traverse by level
             for (int i = 0; i < size; i++) {
                 JsonElementWithPath org = queue.poll();
-                String currentLevel = org.getLevel();
+                String currentLevel = org.getPath();
                 JsonElement je = org.getJsonElement();
 
                 if (je.isJsonArray()) {
@@ -209,7 +206,7 @@ public class Utils {
                     result.put(currentLevel, ja);
                     for (int j = 0; j < ja.size(); j++) {
                         String level = currentLevel + "[" + j + "]";
-                        if(ignoreCase) {
+                        if (ignoreCase) {
                             level = level.toLowerCase();
                         }
                         JsonElementWithPath tmp = new JsonElementWithPath(ja.get(j), level);
@@ -219,7 +216,7 @@ public class Utils {
                     JsonObject jo = je.getAsJsonObject();
                     for (Map.Entry<String, JsonElement> entry : jo.entrySet()) {
                         String level = currentLevel + "." + entry.getKey();
-                        if(ignoreCase) {
+                        if (ignoreCase) {
                             level = level.toLowerCase();
                         }
                         JsonElementWithPath tmp = new JsonElementWithPath(entry.getValue(), level);

@@ -193,7 +193,7 @@ public class JsonPath {
             //Traverse by level
             for (int i = 0; i < size; i++) {
                 JsonElementWithPath org = queue.poll();
-                String currentLevel = org.getLevel();
+                String currentLevel = org.getPath();
                 JsonElement je = org.getJsonElement();
 //                System.out.println(currentLevel);
 
@@ -281,7 +281,7 @@ public class JsonPath {
         Iterator<JsonElementWithPath> itr = result.iterator();
         while (itr.hasNext()) {
             JsonElementWithPath je = itr.next();
-            String level = je.getLevel().trim();
+            String level = je.getPath().trim();
             if(isPathMatchingAbsolutePaths(level, absolutePaths) ||
                     isPathMatchingRegxs( (ignoreCase ? level.toLowerCase() : level), regexs) ||
                     isPathMatchingIgnoredFilters(cachedJsonArrays, (ignoreCase ? level.toLowerCase() : level), ignoredMatchedFilters)) {

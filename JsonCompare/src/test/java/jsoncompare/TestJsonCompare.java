@@ -6,8 +6,10 @@ import com.jz.json.jsoncompare.Filter;
 import com.jz.json.jsoncompare.Result;
 import org.junit.Assert;
 import org.testng.annotations.Test;
+
 import java.io.File;
 import java.io.IOException;
+
 import static com.jz.json.jsoncompare.JsonCompare.compareJson;
 import static com.jz.json.utils.Utils.convertFormattedJson2Raw;
 
@@ -48,6 +50,20 @@ public class TestJsonCompare {
         Result result = compareJson(o1, o2, "LENIENT");
         System.out.println(result.getResultDetails());
         Assert.assertTrue("Two JsonObjects are equal", result.getFailures().size() == 0);
+    }
+
+    @Test
+    public void testJsonCompare_unequal_JsonArray_lenient() throws Exception {
+        JsonParser parser = new JsonParser();
+        String json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JsonArray1.json"));
+        JsonObject o1 = parser.parse(json).getAsJsonObject();
+
+        json = convertFormattedJson2Raw(new File("./src/test/java/jsoncompare/JsonArray2.json"));
+        JsonObject o2 = parser.parse(json).getAsJsonObject();
+
+        Result result = compareJson(o1, o2, "LENIENT");
+        System.out.println(result.getResultDetails());
+        Assert.assertTrue("Two JsonObjects are equal", result.getFailures().size() == 7);
     }
 
     @Test
@@ -105,7 +121,7 @@ public class TestJsonCompare {
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
         Filter filter = new Filter(
-                new String[]{"UNEXPECTED_FIELD"},
+                new String[]{"UNEXPECTED_PROPERTY"},
                 new String[]{"$.listing.listingProperties[2].propertyValues[*]",
                         "listing.listingLifecycle.scheduledStartDate.value",
                         "listing.termsAndPolicies.logisticsTerms.logisticsPlan[0:]"},

@@ -1,0 +1,23 @@
+{
+  "Hobbies": [
+    "ski",
+    "basketball",
+    "ski"
+  ],
+  "courses": [
+    {
+      "id": "physics",
+      "score": "70"
+    },
+    {
+      "id": "math",
+      "score": "90",
+      "grade": "A"
+    },
+    {
+      "id": "english",
+      "score": "90",
+      "grade": "A"
+    }
+  ]
+}

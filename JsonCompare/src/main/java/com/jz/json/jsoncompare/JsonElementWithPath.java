@@ -8,28 +8,28 @@ import com.google.gson.*;
 
 public class JsonElementWithPath {
     private JsonElement jsonElement;
-    private String level;
+    private String path;
 
-    public JsonElementWithPath(JsonElement jsonElement, String level) {
+    public JsonElementWithPath(JsonElement jsonElement, String path) {
         this.jsonElement = jsonElement;
-        this.level = level;
+        this.path = path;
     }
 
     public JsonElement getJsonElement() {
         return this.jsonElement;
     }
 
-    public String getLevel() {
-        return this.level;
+    public String getPath() {
+        return this.path;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     @Override
     public String toString() {
-        return level + " : " + jsonElement;
+        return path + " : " + jsonElement;
     }
 
 

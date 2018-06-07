@@ -80,7 +80,7 @@ public class Failure {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("FIELD : " + path + "\r\n");
+        sb.append("JsonPath : " + path + "\r\n");
         sb.append("Reason : " + failureMsg + "\r\n");
 //        sb.append("EXPECTED : " + getExpected() + "\r\n");
 //        sb.append("ACTUAL : " + getActual() + "\r\n");
