@@ -17,7 +17,7 @@ public class Result {
     private Mode mode;
     private List<Failure> failures = new ArrayList<Failure>();
 
-    public boolean isPassed() {
+    public boolean passed() {
         return (failures.size() == 0);
     }
 

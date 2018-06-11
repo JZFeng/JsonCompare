@@ -7,13 +7,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonParser;
 
 import java.io.File;
-import java.util.Set;
-import java.util.Map;
-import java.util.LinkedList;
-import java.util.ArrayList;
-import java.util.Queue;
-import java.util.List;
-import java.util.HashSet;
+import java.util.*;
 
 import static com.jz.json.utils.Utils.*;
 
@@ -27,10 +21,10 @@ public class JsonCompare {
 
         JsonParser parser = new JsonParser();
 
-        String json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/JA1.json"));
+        String json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/nonmember_deliverywaiver.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/JA2.json"));
+        json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/url.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
 
@@ -104,8 +98,7 @@ public class JsonCompare {
                 JsonElement je2 = dest.getJsonElement();
 
                 if (je1.isJsonPrimitive()) {
-                    Result r = compareJsonPrimitive(currentLevelOfOrg, je1.getAsJsonPrimitive(), je2.getAsJsonPrimitive(), mode);
-                    result.getFailures().addAll(r.getFailures());
+                    compareJsonPrimitive(currentLevelOfOrg, je1.getAsJsonPrimitive(), je2.getAsJsonPrimitive(), result, mode);
                 } else if (je1.isJsonArray()) {
                     JsonArray ja1 = je1.getAsJsonArray();
                     JsonArray ja2 = je2.getAsJsonArray();
@@ -186,10 +179,9 @@ public class JsonCompare {
 
     }
 
-    private static Result compareJsonPrimitive(
-            String parentPath, JsonPrimitive o1, JsonPrimitive o2, Mode mode) {
+    private static void compareJsonPrimitive(
+            String parentPath, JsonPrimitive o1, JsonPrimitive o2, Result result, Mode mode) {
 
-        Result result = new Result(mode, new ArrayList<>());
         String s1 = o1.getAsString().trim();
         String s2 = o2.getAsString().trim();
         if (!s1.equalsIgnoreCase(s2)) {
@@ -197,10 +189,14 @@ public class JsonCompare {
             Failure failure = new Failure(parentPath, FailureType.UNEQUAL_VALUE, o1, o2, failureMsg);
             result.addFailure(failure);
         }
-
-        return result;
     }
 
+    private static Result compareJsonPrimitive(
+            String parentPath, JsonPrimitive o1, JsonPrimitive o2, Mode mode) {
+        Result r = new Result(mode);
+        compareJsonPrimitive(parentPath, o1, o2, r, mode);
+        return r;
+    }
 
     private static void compareJsonArrayWithStrictOrder(
             String parentPath, JsonArray expected, JsonArray actual, Result result, Mode mode) {
@@ -292,13 +288,14 @@ public class JsonCompare {
         for (int i = 0; i < expected.size(); ++i) {
             JsonElement expectedElement = expected.get(i);
             boolean matchFound = false;
+            Result r = null;
             for (int j = 0; j < actual.size(); ++j) {
                 JsonElement actualElement = actual.get(j);
                 if (matched.contains(j) || !actualElement.getClass().equals(expectedElement.getClass())) {
                     continue;
                 }
 
-                Result r = null;
+
                 if (expectedElement instanceof JsonObject) {
                     r = compareJson(parentPath + "[" + i + "]", (JsonObject) expectedElement, (JsonObject) actualElement, mode);
                 } else if (expectedElement instanceof JsonArray) {
@@ -307,13 +304,14 @@ public class JsonCompare {
                     r = compareJsonPrimitive(parentPath + "[" + i + "]", (JsonPrimitive) expectedElement, (JsonPrimitive) actualElement, mode);
                 }
 
-                if (expectedElement.equals(actualElement) || r.isPassed()) {
+                if (expectedElement.equals(actualElement) || r.passed()) {
                     matched.add(j);
                     matchFound = true;
                     break;
                 }
 
             }
+
             if (!matchFound) {
                 String failureMsg = "\"" + expectedElement + "\"" + " is missing from actual JsonArray.";
                 Failure failure = new Failure(parentPath + "[" + i + "]", FailureType.MISSING_JSONARRAY_ELEMENT, expectedElement, null, failureMsg);
@@ -331,7 +329,6 @@ public class JsonCompare {
             Failure failure = new Failure(parentPath + "[" + j + "]", FailureType.UNEXPECTED_JSONARRAY_ELEMENT, null, actualElement, failureMsg);
             result.add(failure);
         }
-
 
         return result;
     }
