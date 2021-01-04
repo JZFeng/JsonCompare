@@ -1,13 +1,13 @@
-package com.jz.json.jsoncompare;
+package com.jz.jsoncompare;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.jz.json.jsonpath.IFilter;
+import com.jz.jsonpath.IFilter;
 
 import java.util.*;
 
-import static com.jz.json.jsonpath.JsonPath.*;
-import static com.jz.json.utils.Utils.getJsonArrayMap;
+import static com.jz.jsonpath.JsonPath.*;
+import static com.jz.jsoncompare.Utils.getJsonArrayMap;
 
 /**
  * @author jzfeng
@@ -64,7 +64,7 @@ public class Result {
         return failures.size();
     }
 
-    public Result applyFilter(Filter filter, JsonObject source, JsonObject dest) {
+    public Result applyFilter(Filter filter, JsonObject source, JsonObject dest) throws Exception {
         if (mode != null) {
             //apply ignoredTypes
             boolean ignoreCase = filter.ignoreCase;
@@ -100,7 +100,7 @@ public class Result {
             String[] ignoredPaths,
             boolean ignoreCase,
             JsonObject source,
-            Map<String, JsonArray> cachedJsonArrays) {
+            Map<String, JsonArray> cachedJsonArrays) throws Exception {
         if (ignoredPaths == null || ignoredPaths.length == 0) {
             return failures;
         }

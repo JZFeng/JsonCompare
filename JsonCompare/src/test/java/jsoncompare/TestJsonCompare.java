@@ -2,16 +2,16 @@ package jsoncompare;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.jz.json.jsoncompare.Filter;
-import com.jz.json.jsoncompare.Result;
+import com.jz.jsoncompare.Filter;
+import com.jz.jsoncompare.Result;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
 
-import static com.jz.json.jsoncompare.JsonCompare.compareJson;
-import static com.jz.json.utils.Utils.convertFormattedJson2Raw;
+import static com.jz.jsoncompare.JsonCompare.compareJson;
+import static com.jz.jsoncompare.Utils.convertFormattedJson2Raw;
 
 
 /**

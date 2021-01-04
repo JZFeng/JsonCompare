@@ -26,6 +26,11 @@
             <version>6.8</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.jz</groupId>
+            <artifactId>jsonpath</artifactId>
+            <version>1.1-RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -45,12 +50,12 @@
         <repository>
             <id>maven-releases</id>
             <name>maven-releases</name>
-            <url>http://jz-linux:8081/repository/maven-releases/</url>
+            <url>http://jz-ubuntu:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>maven-snapshots</id>
             <name>maven-snapshots</name>
-            <url>http://jz-linux:8081/repository/maven-snapshots/</url>
+            <url>http://jz-ubuntu:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>

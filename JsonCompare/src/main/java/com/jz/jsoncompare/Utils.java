@@ -1,7 +1,7 @@
-package com.jz.json.utils;
+package com.jz.jsoncompare;
 
 import com.google.gson.*;
-import com.jz.json.jsoncompare.JsonElementWithPath;
+import com.jz.jsoncompare.JsonElementWithPath;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.jz.json.jsoncompare;
+package com.jz.jsoncompare;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
@@ -9,7 +9,7 @@ import com.google.gson.JsonParser;
 import java.io.File;
 import java.util.*;
 
-import static com.jz.json.utils.Utils.*;
+import static com.jz.jsoncompare.Utils.*;
 
 /**
  * @author jzfeng
@@ -21,24 +21,22 @@ public class JsonCompare {
 
         JsonParser parser = new JsonParser();
 
-        String json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/nonmember_deliverywaiver.json"));
+        String json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/a.json"));
         JsonObject o1 = parser.parse(json).getAsJsonObject();
 
-        json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/url.json"));
+        json = convertFormattedJson2Raw(new File("/Users/jzfeng/Desktop/b.json"));
         JsonObject o2 = parser.parse(json).getAsJsonObject();
 
 
         Filter filter = new Filter(
-                new String[]{"UNEXPECTED_PROPERTY"},
-
-                new String[]{"$.listing.listingProperties[2].propertyValues[*]",
-                        "listing.listingLifecycle.scheduledStartDate.value",
-                        "listing.termsAndPolicies.logisticsTerms.logisticsPlan[0:]"},
-
-                new String[]{"listing.tradingSummary.lastVisitDate"}
+                new String[]{},
+                new String[]{"$.meta.trackingList[*].eventProperty.pageci"},
+                new String[]{"$.meta.trackingList[*].eventProperty.pageci"}
         );
 
-        Result result = compareJson(o1, o2, "LENIENT");
+
+
+        Result result = compareJson(o1, o2, "LENIENT", filter);
 
         System.out.println(result.getResultDetails());
 
@@ -58,7 +56,7 @@ public class JsonCompare {
         return r;
     }
 
-    public static Result compareJson(JsonObject o1, JsonObject o2, String m, Filter filter) {
+    public static Result compareJson(JsonObject o1, JsonObject o2, String m, Filter filter) throws Exception {
         Result result = compareJson(o1, o2, m);
         return result.applyFilter(filter, o1, o2);
     }
