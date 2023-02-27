@@ -3,7 +3,7 @@ When I was working in eBay ViewItem team, My first task in eBay is a task about 
 
 So I decide to implement it myself.
 
-[UPDATE] there is a 3rd party library called [jsonuit](https://github.com/lukas-krecan/JsonUnit)
+[UPDATE] There is a 3rd party library called [jsonuit](https://github.com/lukas-krecan/JsonUnit), which is better than my implementation.
 
 # Filter to ignore some differences
 In some json comparing, you may want to need ignore some JsonPaths.
